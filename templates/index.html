@@ -1,15 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InkNest</title>
+    <title>InkNest — Your thoughts. Your stories. Your space.</title>
+
+    <!--
+        Flask's Jinja2 template engine uses the url_for() function.
+        url_for('static', filename='css/style.css') dynamically generates the absolute URL
+        for static files, guaranteeing correct paths regardless of hosting environment.
+    -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-    <h1>Welcome to InkNest!</h1>
-    <p>Your thoughts. Your stories. Your space.</p>
-</body>
 
+    <!-- Top Navigation Bar -->
+    <header class="site-header">
+        <div class="container nav-wrapper">
+            <a href="{{ url_for('home') }}" class="brand">
+                <span class="brand-title">InkNest</span>
+                <span class="brand-badge">Dev</span>
+            </a>
+
+            <nav aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('home') }}" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#vision" class="nav-link">Vision</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Welcome / Hero Section -->
+            <section class="hero-section">
+                <span class="hero-tag">Welcome to InkNest</span>
+                <h1 class="hero-title">InkNest</h1>
+                <p class="hero-tagline">Your thoughts. Your stories. Your space.</p>
+                <p class="hero-intro">
+                    A calm, intentional blogging and journaling platform crafted for writers, thinkers, 
+                    and storytellers. Whether sharing essays with the world or preserving personal reflections 
+                    in private notebooks, InkNest provides an uncluttered canvas for your voice.
+                </p>
+            </section>
+
+            <!-- Platform Vision Grid -->
+            <section id="vision" class="overview-grid">
+                <article class="feature-card">
+                    <div class="card-icon">✦</div>
+                    <h2 class="card-title">Public Blogging</h2>
+                    <p class="card-description">
+                        Publish essays, ideas, and stories to a clean reading environment focused purely on typography and content.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon">◈</div>
+                    <h2 class="card-title">Private Journaling</h2>
+                    <p class="card-description">
+                        Keep personal, secure daily entries protected in your own digital space away from public feeds.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="card-icon">❖</div>
+                    <h2 class="card-title">Distraction-Free</h2>
+                    <p class="card-description">
+                        Designed with warm neutral aesthetics, zero intrusive popups, and a focus on clarity and mindfulness.
+                    </p>
+                </article>
+            </section>
+
+            <!-- Development Status Banner -->
+            <section id="about" class="dev-banner">
+                <div class="dev-banner-text">
+                    <h3>Environment Status: Active</h3>
+                    <p>Phase 0 development environment is running smoothly on Flask with Jinja2 template rendering.</p>
+                </div>
+                <div class="phase-indicator">
+                    <span class="phase-dot"></span>
+                    <span>Phase 0: Foundation</span>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="container footer-wrapper">
+            <p>&copy; 2026 InkNest. Built with Python &amp; Flask.</p>
+            <p>Phase 0 — Development Environment</p>
+        </div>
+    </footer>
+
+    <!-- Optional client-side script -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
 </html>

@@ -1,0 +1,35 @@
+# ==============================================================================
+# InkNest .gitignore
+# ==============================================================================
+
+# Python Virtual Environments
+# (Virtual environments contain large binary packages specific to your OS.
+# Never commit them to Git; colleagues/servers should recreate them via requirements.txt)
+venv/
+.venv/
+env/
+ENV/
+
+# Python Bytecode and Cache
+# (Python compiles .py to .pyc bytecode at runtime for faster execution.
+# These are regenerated automatically and should not be tracked)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables & Secrets
+# (Never commit passwords, API keys, or secret tokens)
+.env
+.env.local
+
+# Operating System temporary files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Editor / IDE configuration files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
