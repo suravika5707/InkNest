@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="InkNest — A quiet, intentional platform for personal journaling and thoughtful public blogging.">
+    
+    <title>{% block title %}InkNest — Your thoughts. Your stories. Your space.{% endblock %}</title>
+
+    <!-- Global Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Hook for page-specific stylesheets in future phases -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Site Header & Navigation Bar -->
+    <header class="site-header">
+        <div class="container nav-wrapper">
+            <a href="{{ url_for('home') }}" class="brand" aria-label="InkNest Home">
+                <span class="brand-mark">✦</span>
+                <span class="brand-title">InkNest</span>
+            </a>
+
+            <nav class="site-nav" aria-label="Main Navigation">
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+                    <li><a href="{{ url_for('explore') }}" class="nav-link">Explore</a></li>
+                    <li><a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a></li>
+                    <li><a href="{{ url_for('editor') }}" class="nav-link nav-cta">Write</a></li>
+                    <li><a href="{{ url_for('auth') }}" class="nav-link nav-auth">Sign In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Injection Area -->
+    <main class="main-content">
+        {% block content %}
+        <!-- Child templates inject their unique page content here -->
+        {% endblock %}
+    </main>
+
+    <!-- Site Colophon & Footer -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-colophon">
+                <div class="footer-brand">
+                    <span class="brand-mark">✦</span>
+                    <span class="brand-title">InkNest</span>
+                </div>
+                <p class="footer-tagline">Your thoughts. Your stories. Your space.</p>
+                <p class="footer-description">
+                    A calm, distraction-free environment crafted for deliberate personal journaling 
+                    and attentive public reading. Built with simplicity, craft, and respect for words.
+                </p>
+            </div>
+
+            <div class="footer-nav-group">
+                <h4 class="footer-heading">Platform</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('explore') }}">Explore Essays</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Writer's Desk</a></li>
+                    <li><a href="{{ url_for('editor') }}">New Entry</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-group">
+                <h4 class="footer-heading">Philosophy</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('home') }}#philosophy">Public vs. Private</a></li>
+                    <li><a href="{{ url_for('home') }}#principles">Editorial Standards</a></li>
+                    <li><a href="{{ url_for('auth') }}">Account Access</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>&copy; 2026 InkNest. Crafted with Python, Flask and clean web standards.</p>
+            <p class="footer-colophon-note">Phase 1: Frontend Architecture</p>
+        </div>
+    </footer>
+
+    <!-- Global Client Script -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Hook for page-specific scripts in future phases -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

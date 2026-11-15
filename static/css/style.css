@@ -1,36 +1,42 @@
 /* ==============================================================================
-   InkNest - Core Stylesheet (Phase 0)
-   Design Philosophy: Minimal, warm neutral, literary, and responsive.
-   Zero external dependencies or CSS frameworks.
+   InkNest — Editorial & Literary Stylesheet (Phase 1)
+   Design Philosophy: Warm neutral, editorial, calm, human-crafted.
+   Zero external frameworks or bloated libraries.
    ============================================================================== */
 
-/* --- CSS Variables / Design Tokens --- */
+/* --- 1. CSS Design Tokens --- */
 :root {
-    /* Color Palette: Warm Neutral & Rich Ink */
-    --color-bg: #f8f6f0;               /* Warm parchment background */
-    --color-surface: #ffffff;          /* Pure white card/section surface */
-    --color-surface-subtle: #f2eee6;   /* Slightly darker warm tone for accents */
-    --color-text-main: #2b2826;        /* Deep charcoal / off-black for readability */
-    --color-text-muted: #6e6863;       /* Softer muted charcoal for secondary text */
-    --color-border: #e6e0d6;           /* Subtle warm border */
-    --color-accent: #934a31;           /* Warm terracotta / ink red accent */
-    --color-accent-hover: #783b27;     /* Darker terracotta for interactive hover */
-    --color-tag-bg: #ede7dc;           /* Pill/tag background */
+    /* Color Palette: Warm Parchment & Deep Charcoal Ink */
+    --color-bg: #f9f7f2;               /* Warm natural paper background */
+    --color-surface: #ffffff;          /* Crisp card surface */
+    --color-surface-tint: #f3efe6;     /* Subtle warm ivory for accents and secondary cards */
+    --color-text-main: #272422;        /* Deep charcoal / off-black for reading comfort */
+    --color-text-muted: #6b6560;       /* Muted earth-charcoal for subtitles and metadata */
+    --color-border: #e4ddd3;           /* Gentle, warm border line */
+    --color-border-subtle: #eee9e0;    /* Extra faint divider */
+    
+    /* Brand Accents */
+    --color-accent: #934a31;           /* Terracotta / warm printer's ink */
+    --color-accent-hover: #793a24;     /* Darker terracotta on hover */
+    --color-accent-tint: #f6ede8;      /* Faint wash of terracotta for tags */
+    --color-secondary-tint: #eae5db;   /* Soft stone badge */
 
     /* Typography */
-    --font-serif: "Charter", "Georgia", "Cambria", "Times New Roman", serif;
+    --font-serif: "Charter", "Source Serif 4", "Georgia", "Cambria", "Times New Roman", serif;
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-    /* Spacing & Layout */
-    --container-max-width: 980px;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 18px;
-    --shadow-soft: 0 4px 20px rgba(43, 40, 38, 0.05);
-    --shadow-card: 0 2px 10px rgba(43, 40, 38, 0.04);
+    /* Spacing & Proportions */
+    --container-width: 1040px;
+    --content-narrow: 720px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --shadow-soft: 0 4px 20px rgba(39, 36, 34, 0.04);
+    --shadow-hover: 0 6px 24px rgba(39, 36, 34, 0.07);
 }
 
-/* --- Base Reset & Box Sizing --- */
+/* --- 2. Base Reset & Typography --- */
 *,
 *::before,
 *::after {
@@ -53,123 +59,240 @@ body {
     display: flex;
     flex-direction: column;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
-/* --- Container Utility --- */
+/* Typography Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    color: var(--color-text-main);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Container */
 .container {
     width: 100%;
-    max-width: var(--container-max-width);
+    max-width: var(--container-width);
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
 }
 
-/* --- Header & Navigation Bar --- */
+/* --- 3. Header & Navigation --- */
 .site-header {
-    background-color: var(--color-bg);
+    background-color: rgba(249, 247, 242, 0.94);
     border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
-    z-index: 10;
-    backdrop-filter: blur(8px);
-    background-color: rgba(248, 246, 240, 0.92);
+    z-index: 50;
+    backdrop-filter: blur(10px);
 }
 
 .nav-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0;
+    padding: 1.15rem 0;
 }
 
 .brand {
-    display: flex;
-    align-items: baseline;
+    display: inline-flex;
+    align-items: center;
     gap: 0.5rem;
-    text-decoration: none;
-    color: var(--color-text-main);
+}
+
+.brand-mark {
+    color: var(--color-accent);
+    font-size: 1.25rem;
+    line-height: 1;
 }
 
 .brand-title {
     font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--color-accent);
-}
-
-.brand-badge {
-    font-size: 0.75rem;
-    font-family: var(--font-sans);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.15rem 0.45rem;
-    background-color: var(--color-tag-bg);
-    color: var(--color-text-muted);
-    border-radius: var(--radius-sm);
-    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--color-text-main);
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 1.75rem;
     align-items: center;
+    gap: 1.75rem;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: var(--color-text-muted);
     font-size: 0.95rem;
+    color: var(--color-text-muted);
     font-weight: 500;
     transition: color 0.15s ease;
+    padding: 0.25rem 0;
+    position: relative;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
     color: var(--color-accent);
 }
 
-.nav-link.active {
-    color: var(--color-text-main);
-    font-weight: 600;
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
 }
 
-/* --- Main Content Area --- */
+/* Special CTA buttons in Nav */
+.nav-cta {
+    color: var(--color-accent) !important;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem !important;
+    background-color: var(--color-accent-tint);
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+
+.nav-cta:hover {
+    background-color: var(--color-accent);
+    color: #ffffff !important;
+}
+
+.nav-cta.active::after {
+    display: none;
+}
+
+.nav-auth {
+    font-size: 0.9rem;
+    border-left: 1px solid var(--color-border);
+    padding-left: 1.5rem !important;
+}
+
+/* --- 4. Shared Buttons & Interactive Elements --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.75rem 1.6rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    line-height: 1.4;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-main);
+    border-color: var(--color-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-text-muted);
+}
+
+/* --- 5. Main Content Area --- */
 .main-content {
     flex: 1;
     padding: 3.5rem 0 5rem;
 }
 
-/* --- Hero / Welcome Section --- */
-.hero-section {
+/* Section Header Shared Utility */
+.section-header {
     text-align: center;
-    max-width: 760px;
-    margin: 0 auto 4rem;
+    max-width: var(--content-narrow);
+    margin: 0 auto 3rem;
 }
 
-.hero-tag {
+.section-kicker {
     display: inline-block;
-    font-size: 0.825rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--color-accent);
-    background-color: var(--color-surface-subtle);
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    margin-bottom: 0.85rem;
+}
+
+.section-description {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
+/* --- 6. Homepage: Hero Section --- */
+.hero-section {
+    padding: 2.5rem 0 4.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--color-border-subtle);
+    margin-bottom: 4.5rem;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-kicker {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+    background-color: var(--color-accent-tint);
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    margin-bottom: 1.25rem;
-    border: 1px solid var(--color-border);
+    margin-bottom: 1.5rem;
 }
 
 .hero-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-size: clamp(2.35rem, 5.5vw, 3.6rem);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    color: var(--color-text-main);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
     margin-bottom: 1rem;
+    color: var(--color-text-main);
 }
 
 .hero-tagline {
@@ -180,140 +303,329 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.hero-intro {
-    font-size: 1.125rem;
+.hero-lead {
+    font-size: 1.15rem;
     color: var(--color-text-muted);
     line-height: 1.75;
-    max-width: 640px;
-    margin: 0 auto;
+    max-width: 660px;
+    margin: 0 auto 2.25rem;
 }
 
-/* --- Features / Overview Grid --- */
-.overview-grid {
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* --- 7. Homepage: The Dual Philosophy (Public vs. Private) --- */
+.philosophy-section {
+    margin-bottom: 5.5rem;
+}
+
+.dual-spaces-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
 }
 
-.feature-card {
+.space-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 2rem;
-    box-shadow: var(--shadow-card);
+    padding: 2.75rem 2.25rem;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.space-public {
+    border-top: 4px solid var(--color-accent);
+}
+
+.space-private {
+    border-top: 4px solid #5a646e; /* Slate ink */
+}
+
+.space-badge {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+}
+
+.space-public .space-badge {
+    background-color: var(--color-accent-tint);
+    color: var(--color-accent);
+}
+
+.space-private .space-badge {
+    background-color: var(--color-secondary-tint);
+    color: #434c54;
+}
+
+.space-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.space-summary {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.75rem;
+}
+
+.space-features {
+    list-style: none;
+    margin-top: auto;
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.space-features li {
+    font-size: 0.925rem;
+    color: var(--color-text-main);
+    line-height: 1.55;
+    position: relative;
+    padding-left: 1.35rem;
+}
+
+.space-features li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-text-muted);
+}
+
+/* --- 8. Homepage: Editorial Principles --- */
+.principles-section {
+    padding: 3rem 0 4.5rem;
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+    margin-bottom: 5rem;
+}
+
+.principles-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.25rem;
+}
+
+.principle-item {
     display: flex;
     flex-direction: column;
 }
 
-.card-icon {
-    font-family: var(--font-serif);
-    font-size: 1.75rem;
+.principle-number {
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
     color: var(--color-accent);
-    margin-bottom: 1rem;
-    line-height: 1;
+    margin-bottom: 0.85rem;
+    display: block;
 }
 
-.card-title {
-    font-family: var(--font-serif);
+.principle-title {
     font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text-main);
     margin-bottom: 0.65rem;
+    line-height: 1.3;
 }
 
-.card-description {
+.principle-text {
     font-size: 0.95rem;
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
-/* --- Status / Development Banner --- */
-.dev-banner {
-    margin-top: 3.5rem;
-    background-color: var(--color-surface);
-    border: 1px dashed var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 1.75rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
+/* --- 9. Homepage: Quiet Call to Action / Invitation --- */
+.invitation-section {
+    margin-bottom: 2rem;
 }
 
-.dev-banner-text h3 {
-    font-family: var(--font-serif);
+.invitation-card {
+    background-color: var(--color-surface-tint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.invitation-card .brand-mark {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.invitation-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    margin-bottom: 0.85rem;
+}
+
+.invitation-text {
     font-size: 1.05rem;
-    color: var(--color-text-main);
-    margin-bottom: 0.25rem;
-}
-
-.dev-banner-text p {
-    font-size: 0.9rem;
     color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto 2rem;
 }
 
-.phase-indicator {
+.invitation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* --- 10. Site Footer & Colophon --- */
+.site-footer {
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding: 4rem 0 2.5rem;
+    margin-top: auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3.5rem;
+    margin-bottom: 3rem;
+}
+
+.footer-brand {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.85rem;
-    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.footer-tagline {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
     color: var(--color-accent);
-    background-color: var(--color-surface-subtle);
-    padding: 0.4rem 0.85rem;
-    border-radius: var(--radius-sm);
-    white-space: nowrap;
+    margin-bottom: 0.75rem;
 }
 
-.phase-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #27ae60; /* Calm active green status dot */
-}
-
-/* --- Footer --- */
-.site-footer {
-    border-top: 1px solid var(--color-border);
-    background-color: var(--color-bg);
-    padding: 2rem 0;
-    font-size: 0.875rem;
+.footer-description {
+    font-size: 0.9rem;
     color: var(--color-text-muted);
+    line-height: 1.65;
+    max-width: 420px;
 }
 
-.footer-wrapper {
+.footer-heading {
+    font-family: var(--font-sans);
+    font-size: 0.825rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-main);
+    margin-bottom: 1.15rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.footer-links a {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    transition: color 0.15s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-accent);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
-/* --- Responsive Layout Adjustments --- */
-@media (max-width: 680px) {
-    .nav-wrapper {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
+.footer-colophon-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent);
+}
+
+/* --- 11. Responsive Design & Media Queries --- */
+@media (max-width: 860px) {
+    .dual-spaces-grid {
+        grid-template-columns: 1fr;
     }
 
-    .nav-links {
+    .principles-list {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-wrapper {
+        flex-direction: column;
         gap: 1.25rem;
     }
 
-    .main-content {
-        padding: 2.5rem 0 3.5rem;
+    .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .dev-banner {
+    .nav-auth {
+        border-left: none;
+        padding-left: 0 !important;
+    }
+
+    .hero-section {
+        padding: 1.5rem 0 3rem;
+    }
+
+    .hero-actions,
+    .invitation-actions {
         flex-direction: column;
-        align-items: flex-start;
+        width: 100%;
     }
 
-    .footer-wrapper {
+    .btn {
+        width: 100%;
+    }
+
+    .space-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .footer-bottom {
         flex-direction: column;
         text-align: center;
     }
 }
-

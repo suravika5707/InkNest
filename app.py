@@ -1,8 +1,8 @@
 """
-InkNest — Phase 0 Application Entry Point
+InkNest — Application Entry Point & Route Definitions
 
-This file initializes the Flask WSGI application, sets up our homepage
-route, and runs the local development web server.
+This file initializes the Flask WSGI application, defines our routes,
+and starts the local development server.
 """
 
 from flask import Flask, render_template
@@ -10,37 +10,55 @@ from flask import Flask, render_template
 # ------------------------------------------------------------------------------
 # 1. Application Initialization
 # ------------------------------------------------------------------------------
-# We create an instance of the Flask class.
-# The argument __name__ is a special Python built-in variable that tells Flask
-# where this file is located in the filesystem. Flask uses this location to find
-# associated folders like 'templates/' and 'static/'.
 app = Flask(__name__)
 
 
 # ------------------------------------------------------------------------------
-# 2. Route Definition
+# 2. Primary Route: Step 1 Landing Page
 # ------------------------------------------------------------------------------
-# The @app.route decorator binds a URL path to a Python function (called a view function).
-# Whenever a browser requests the root URL ("/"), Flask calls home().
 @app.route("/")
 def home():
     """
-    View function for the InkNest homepage.
-    
-    render_template() looks inside the 'templates/' directory for 'index.html',
-    processes any Jinja2 template tags, and returns the final HTML string to the browser.
+    Renders the InkNest editorial homepage.
+    Uses templates/index.html (which inherits from templates/base.html).
     """
     return render_template("index.html")
 
 
 # ------------------------------------------------------------------------------
-# 3. Development Server Execution
+# 3. Phase 1 Route Stubs
 # ------------------------------------------------------------------------------
-# The check below ensures that app.run() is only called if this script is run
-# directly (e.g. `python app.py`), and NOT if it is imported into another file.
+# These placeholder view functions ensure that Jinja2's url_for() calls in
+# base.html resolve cleanly without BuildError exceptions.
+# Full page templates and logic will be implemented sequentially in Steps 2–5.
+# ------------------------------------------------------------------------------
+
+@app.route("/dashboard")
+def dashboard():
+    """Placeholder for Step 2: Writer's Dashboard."""
+    return render_template("index.html")
+
+
+@app.route("/editor")
+def editor():
+    """Placeholder for Step 3: Distraction-Free Editor."""
+    return render_template("index.html")
+
+
+@app.route("/explore")
+def explore():
+    """Placeholder for Step 4: Explore & Reading Feed."""
+    return render_template("index.html")
+
+
+@app.route("/auth")
+def auth():
+    """Placeholder for Step 5: Authentication (Login / Register)."""
+    return render_template("index.html")
+
+
+# ------------------------------------------------------------------------------
+# 4. Local Development Server Execution
+# ------------------------------------------------------------------------------
 if __name__ == "__main__":
-    # debug=True provides two powerful features during development:
-    # 1. Live Reload: The server restarts automatically when you save code changes.
-    # 2. Interactive Debugger: Displays detailed error tracebacks in the browser.
-    # Note: debug mode should NEVER be enabled in production environments.
     app.run(debug=True)

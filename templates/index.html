@@ -1,104 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InkNest — Your thoughts. Your stories. Your space.</title>
+{% extends "base.html" %}
 
-    <!--
-        Flask's Jinja2 template engine uses the url_for() function.
-        url_for('static', filename='css/style.css') dynamically generates the absolute URL
-        for static files, guaranteeing correct paths regardless of hosting environment.
-    -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+{% block title %}InkNest — A Sanctuary for Words That Matter{% endblock %}
 
-    <!-- Top Navigation Bar -->
-    <header class="site-header">
-        <div class="container nav-wrapper">
-            <a href="{{ url_for('home') }}" class="brand">
-                <span class="brand-title">InkNest</span>
-                <span class="brand-badge">Dev</span>
-            </a>
+{% block content %}
+<div class="container">
 
-            <nav aria-label="Main Navigation">
-                <ul class="nav-links">
-                    <li><a href="{{ url_for('home') }}" class="nav-link active">Home</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#vision" class="nav-link">Vision</a></li>
-                </ul>
-            </nav>
+    <!-- 1. Editorial Masthead / Hero -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <span class="hero-kicker">A Quiet Publishing &amp; Journaling Space</span>
+            <h1 class="hero-title">Words written with care, read with attention.</h1>
+            <p class="hero-tagline">Your thoughts. Your stories. Your space.</p>
+            <p class="hero-lead">
+                The modern web is loud, rushed, and crowded with algorithmic noise. 
+                InkNest is an antidote: a calm, warm environment designed for people who take 
+                writing seriously—whether keeping private personal notes or sharing essays with the world.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ url_for('editor') }}" class="btn btn-primary">Start Writing</a>
+                <a href="{{ url_for('explore') }}" class="btn btn-secondary">Explore Stories</a>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Main Content Container -->
-    <main class="main-content">
-        <div class="container">
+    <!-- 2. The Dual Philosophy: Public vs. Private -->
+    <section id="philosophy" class="philosophy-section">
+        <div class="section-header">
+            <span class="section-kicker">The Two Spaces of InkNest</span>
+            <h2 class="section-title">Designed for how writers actually think.</h2>
+            <p class="section-description">
+                Writing is not a single activity. Sometimes you are exploring vulnerable thoughts 
+                only meant for yourself; other times you are shaping finished work to share with readers. 
+                InkNest separates both worlds with dignity.
+            </p>
+        </div>
 
-            <!-- Welcome / Hero Section -->
-            <section class="hero-section">
-                <span class="hero-tag">Welcome to InkNest</span>
-                <h1 class="hero-title">InkNest</h1>
-                <p class="hero-tagline">Your thoughts. Your stories. Your space.</p>
-                <p class="hero-intro">
-                    A calm, intentional blogging and journaling platform crafted for writers, thinkers, 
-                    and storytellers. Whether sharing essays with the world or preserving personal reflections 
-                    in private notebooks, InkNest provides an uncluttered canvas for your voice.
+        <div class="dual-spaces-grid">
+            <!-- Space 1: Public Desk -->
+            <article class="space-card space-public">
+                <div class="space-badge">The Public Desk</div>
+                <h3 class="space-title">Thoughtful Blogging</h3>
+                <p class="space-summary">
+                    Publish essays, reviews, critiques, and stories to an attentive, calm reading environment.
                 </p>
-            </section>
+                <ul class="space-features">
+                    <li>Clean, distraction-free reading typography calibrated for long-form immersion.</li>
+                    <li>No vanity metrics, clap counters, or addictive engagement traps.</li>
+                    <li>Shareable URLs that respect your readers' attention and privacy.</li>
+                </ul>
+            </article>
 
-            <!-- Platform Vision Grid -->
-            <section id="vision" class="overview-grid">
-                <article class="feature-card">
-                    <div class="card-icon">✦</div>
-                    <h2 class="card-title">Public Blogging</h2>
-                    <p class="card-description">
-                        Publish essays, ideas, and stories to a clean reading environment focused purely on typography and content.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="card-icon">◈</div>
-                    <h2 class="card-title">Private Journaling</h2>
-                    <p class="card-description">
-                        Keep personal, secure daily entries protected in your own digital space away from public feeds.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="card-icon">❖</div>
-                    <h2 class="card-title">Distraction-Free</h2>
-                    <p class="card-description">
-                        Designed with warm neutral aesthetics, zero intrusive popups, and a focus on clarity and mindfulness.
-                    </p>
-                </article>
-            </section>
-
-            <!-- Development Status Banner -->
-            <section id="about" class="dev-banner">
-                <div class="dev-banner-text">
-                    <h3>Environment Status: Active</h3>
-                    <p>Phase 0 development environment is running smoothly on Flask with Jinja2 template rendering.</p>
-                </div>
-                <div class="phase-indicator">
-                    <span class="phase-dot"></span>
-                    <span>Phase 0: Foundation</span>
-                </div>
-            </section>
-
+            <!-- Space 2: Private Drawer -->
+            <article class="space-card space-private">
+                <div class="space-badge">The Private Drawer</div>
+                <h3 class="space-title">Personal Journaling</h3>
+                <p class="space-summary">
+                    Record honest daily reflections, morning pages, and unfiltered draft notes.
+                </p>
+                <ul class="space-features">
+                    <li>Strictly private entries reserved exclusively for your own eyes.</li>
+                    <li>Write freely without performance pressure, curation anxiety, or external judgment.</li>
+                    <li>Organize your thoughts into chronological journal archives.</li>
+                </ul>
+            </article>
         </div>
-    </main>
+    </section>
 
-    <!-- Site Footer -->
-    <footer class="site-footer">
-        <div class="container footer-wrapper">
-            <p>&copy; 2026 InkNest. Built with Python &amp; Flask.</p>
-            <p>Phase 0 — Development Environment</p>
+    <!-- 3. Editorial Standards / Why Quiet Software Matters -->
+    <section id="principles" class="principles-section">
+        <div class="section-header">
+            <span class="section-kicker">Our Craft</span>
+            <h2 class="section-title">Quiet software for thoughtful minds.</h2>
         </div>
-    </footer>
 
-    <!-- Optional client-side script -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+        <div class="principles-list">
+            <div class="principle-item">
+                <span class="principle-number">01</span>
+                <div class="principle-body">
+                    <h3 class="principle-title">Typography as a First Principle</h3>
+                    <p class="principle-text">
+                        Every font choice, margin, and line-height is selected to evoke the quiet pleasure 
+                        of a finely printed book. Reading should feel restful, never fatiguing.
+                    </p>
+                </div>
+            </div>
+
+            <div class="principle-item">
+                <span class="principle-number">02</span>
+                <div class="principle-body">
+                    <h3 class="principle-title">Zero Algorithmic Interference</h3>
+                    <p class="principle-text">
+                        There are no feed-ranking algorithms rewarding outrage, clickbait, or urgency. 
+                        Readers discover writing chronologically and deliberately.
+                    </p>
+                </div>
+            </div>
+
+            <div class="principle-item">
+                <span class="principle-number">03</span>
+                <div class="principle-body">
+                    <h3 class="principle-title">Dignity for Raw Drafts</h3>
+                    <p class="principle-text">
+                        Great essays rarely start polished. InkNest provides a comfortable, low-friction 
+                        space to preserve half-formed fragments until you are ready to shape them.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Quiet Call to Action / Invitation -->
+    <section class="invitation-section">
+        <div class="invitation-card">
+            <span class="brand-mark">✦</span>
+            <h2 class="invitation-title">The blank page is waiting.</h2>
+            <p class="invitation-text">
+                Whether you wish to log a personal reflection today or compose an essay for readers 
+                everywhere, InkNest gives your thoughts room to breathe.
+            </p>
+            <div class="invitation-actions">
+                <a href="{{ url_for('editor') }}" class="btn btn-primary">Open the Writing Room</a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Visit Your Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
