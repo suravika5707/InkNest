@@ -52,6 +52,83 @@ SAMPLE_ENTRIES = [
     },
 ]
 
+# Editorial sample content for the Explore / Blog Feed (Step 4)
+FEATURED_STORY = {
+    "id": 101,
+    "title": "The Lost Art of Unhurried Reading",
+    "excerpt": "In an era of endless scrolling and thirty-second dopamine loops, sitting with an unbroken long-form essay is an act of quiet rebellion. What happens to our minds when we reclaim the luxury of patience?",
+    "author": "Elena Vance",
+    "category": "Reflections",
+    "published_at": "November 18, 2026",
+    "reading_time": "7 min read",
+}
+
+EXPLORE_STORIES = [
+    {
+        "id": 201,
+        "title": "The Architecture of Quiet Mornings",
+        "excerpt": "Before the city wakes, there exists an unbroken window of silence where thoughts arrange themselves without the pressure of performance.",
+        "author": "Julian Hayes",
+        "category": "Personal",
+        "published_at": "November 16, 2026",
+        "reading_time": "5 min read",
+    },
+    {
+        "id": 202,
+        "title": "On Choosing Simplicity in Software",
+        "excerpt": "Why do modern digital tools insist on growing until they resemble cockpits? A case for software that honors human attention rather than demanding it.",
+        "author": "Marcus Sterling",
+        "category": "Technology",
+        "published_at": "November 14, 2026",
+        "reading_time": "6 min read",
+    },
+    {
+        "id": 203,
+        "title": "The Notebook as a Thinking Laboratory",
+        "excerpt": "Joan Didion once observed that we write to find out what we are thinking. Physical pages and uncluttered digital spaces offer the same sanctuary.",
+        "author": "Clara Bennett",
+        "category": "Creativity",
+        "published_at": "November 11, 2026",
+        "reading_time": "4 min read",
+    },
+    {
+        "id": 204,
+        "title": "Learning in Public: The Power of Honest Notes",
+        "excerpt": "You do not need to be an authority to share what you have learned. Documenting your stumbling journey creates more genuine connection than polished mastery.",
+        "author": "Devon Miller",
+        "category": "Learning",
+        "published_at": "November 08, 2026",
+        "reading_time": "5 min read",
+    },
+    {
+        "id": 205,
+        "title": "The Quiet Drama of Evening Commutes",
+        "excerpt": "Faces illuminated by passing streetlamps, umbrellas dripping on subway floors. Fleeting moments that slip through our fingers unless we record them.",
+        "author": "Siddharth Rao",
+        "category": "Personal",
+        "published_at": "November 05, 2026",
+        "reading_time": "3 min read",
+    },
+    {
+        "id": 206,
+        "title": "Tools for the Solitary Mind",
+        "excerpt": "An exploration of the instruments writers have trusted across centuries, from fountain pens and typewriter ribbons to minimal web canvases.",
+        "author": "Miriam Frost",
+        "category": "Reflections",
+        "published_at": "November 02, 2026",
+        "reading_time": "8 min read",
+    },
+]
+
+EXPLORE_CATEGORIES = [
+    "All Stories",
+    "Personal",
+    "Technology",
+    "Creativity",
+    "Learning",
+    "Reflections",
+]
+
 
 # ------------------------------------------------------------------------------
 # 2. Routes
@@ -96,14 +173,33 @@ def editor():
 
 @app.route("/explore")
 def explore():
-    """Placeholder for Step 4: Explore & Reading Feed."""
-    return render_template("index.html")
+    """
+    Renders the Explore / Blog Feed (Step 4).
+    Passes curated featured story, story collection, and categories.
+    """
+    return render_template(
+        "explore.html",
+        featured_story=FEATURED_STORY,
+        stories=EXPLORE_STORIES,
+        categories=EXPLORE_CATEGORIES,
+    )
 
 
 @app.route("/auth")
+@app.route("/login")
 def auth():
-    """Placeholder for Step 5: Authentication (Login / Register)."""
-    return render_template("index.html")
+    """
+    Renders the Authentication interface (Step 5) in Sign In mode.
+    """
+    return render_template("auth.html", mode="login")
+
+
+@app.route("/register")
+def register():
+    """
+    Renders the Authentication interface (Step 5) in Registration mode.
+    """
+    return render_template("auth.html", mode="register")
 
 
 # ------------------------------------------------------------------------------

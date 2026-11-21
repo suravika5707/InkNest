@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Stories — InkNest{% endblock %}
+
+{% block content %}
+<div class="container explore-container">
+
+    <!-- 1. Editorial Header -->
+    <header class="explore-header">
+        <span class="section-kicker">Curated Reading Room</span>
+        <h1 class="explore-title">Stories worth spending time with.</h1>
+        <p class="explore-subtitle">
+            A collection of thoughts, experiences and ideas shared by writers in the InkNest community.
+        </p>
+    </header>
+
+    <!-- 2. Featured Story Section -->
+    <section class="featured-story-section" aria-label="Featured Story">
+        <article class="featured-story-card">
+            <div class="featured-meta-row">
+                <span class="featured-badge">Featured Lead</span>
+                <span class="story-category-tag">{{ featured_story.category }}</span>
+                <span class="story-read-time">{{ featured_story.reading_time }}</span>
+            </div>
+
+            <h2 class="featured-title">{{ featured_story.title }}</h2>
+            <p class="featured-excerpt">{{ featured_story.excerpt }}</p>
+
+            <div class="featured-footer">
+                <div class="author-byline">
+                    <span class="byline-label">By</span>
+                    <strong class="author-name">{{ featured_story.author }}</strong>
+                    <span class="byline-dot">&middot;</span>
+                    <time class="published-date">{{ featured_story.published_at }}</time>
+                </div>
+
+                <button 
+                    type="button" 
+                    class="btn btn-primary btn-sm read-story-trigger" 
+                    data-story-title="{{ featured_story.title }}"
+                    data-story-author="{{ featured_story.author }}"
+                >
+                    Read Story &rarr;
+                </button>
+            </div>
+        </article>
+    </section>
+
+    <!-- 3. Interactive Filter & Search Controls -->
+    <section class="explore-controls-section" aria-label="Filter and Search Stories">
+        
+        <!-- Search Input -->
+        <div class="search-bar-wrapper">
+            <label for="storySearchInput" class="visually-hidden">Search stories by title, author, or keyword</label>
+            <div class="search-input-container">
+                <span class="search-prefix-icon" aria-hidden="true">✦</span>
+                <input 
+                    type="search" 
+                    id="storySearchInput" 
+                    class="story-search-input" 
+                    placeholder="Search by title, author, excerpt, or topic..." 
+                    autocomplete="off"
+                    spellcheck="false"
+                />
+            </div>
+        </div>
+
+        <!-- Category Navigation Tabs -->
+        <nav class="category-nav" aria-label="Story Categories">
+            <div class="category-pills-list" role="tablist">
+                {% for category in categories %}
+                <button 
+                    type="button" 
+                    class="category-pill-btn {% if loop.first %}active{% endif %}" 
+                    role="tab" 
+                    aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                    data-category="{{ category }}"
+                >
+                    {{ category }}
+                </button>
+                {% endfor %}
+            </div>
+        </nav>
+
+        <!-- Dynamic Filter Status -->
+        <div class="filter-status-bar">
+            <span id="storyCountDisplay" class="filter-count-text">
+                Showing {{ stories|length }} stories
+            </span>
+            <span id="activeFilterIndicator" class="active-filter-indicator">
+                Category: All Stories
+            </span>
+        </div>
+
+    </section>
+
+    <!-- 4. Stories Collection Stream -->
+    <section class="stories-collection-section" aria-label="Explore Stories">
+        <div class="stories-grid" id="storiesGrid">
+            {% for story in stories %}
+            <article 
+                class="story-card" 
+                data-category="{{ story.category }}"
+                data-title="{{ story.title|lower }}"
+                data-author="{{ story.author|lower }}"
+                data-excerpt="{{ story.excerpt|lower }}"
+            >
+                <div class="story-card-header">
+                    <span class="story-category-tag">{{ story.category }}</span>
+                    <span class="story-read-time">{{ story.reading_time }}</span>
+                </div>
+
+                <h3 class="story-card-title">{{ story.title }}</h3>
+                <p class="story-card-excerpt">{{ story.excerpt }}</p>
+
+                <div class="story-card-footer">
+                    <div class="author-byline">
+                        <strong class="author-name">{{ story.author }}</strong>
+                        <span class="byline-dot">&middot;</span>
+                        <time class="published-date">{{ story.published_at }}</time>
+                    </div>
+
+                    <button 
+                        type="button" 
+                        class="story-read-link read-story-trigger" 
+                        data-story-title="{{ story.title }}"
+                        data-story-author="{{ story.author }}"
+                    >
+                        Read Story &rarr;
+                    </button>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- 5. Empty State (When search/filter matches 0 stories) -->
+        <div id="exploreEmptyState" class="explore-empty-state" style="display: none;">
+            <span class="empty-mark" aria-hidden="true">✦</span>
+            <h3 class="empty-title">No stories found</h3>
+            <p class="empty-description" id="emptyStateDetail">
+                We could not find any stories matching your search or category filter.
+            </p>
+            <button type="button" id="resetFiltersBtn" class="btn btn-secondary btn-sm">
+                Clear Search &amp; Show All Stories
+            </button>
+        </div>
+    </section>
+
+    <!-- 6. Reading View Prototype Dialog / Modal -->
+    <div id="readerNoticeModal" class="reader-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+        <div class="reader-modal-card">
+            <button type="button" id="closeModalCrossBtn" class="modal-close-icon" aria-label="Close dialog">&times;</button>
+            
+            <div class="modal-header">
+                <span class="brand-mark">✦</span>
+                <span class="modal-kicker">Phase 1 Prototype Notice</span>
+                <h3 id="modalHeading" class="modal-title">Reading View</h3>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-story-callout">
+                    You selected: <em id="modalStoryTitleDisplay"></em>
+                    <span id="modalStoryAuthorDisplay" class="modal-author-note"></span>
+                </p>
+                <p class="modal-explanation">
+                    In <strong>Phase 2</strong>, clicking a story will navigate to its dedicated 
+                    reading page with complete article typography, author biographies, reader discussions, 
+                    and responsive bookmarking.
+                </p>
+                <p class="modal-subtext">
+                    For Phase 1, our focus is the discovery and exploration interface.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="modalUnderstoodBtn" class="btn btn-primary btn-sm">
+                    Return to Feed
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/explore.js') }}"></script>
+{% endblock %}
+
