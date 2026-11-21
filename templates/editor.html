@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Writing Room — InkNest{% endblock %}
+
+{% block content %}
+<div class="container editor-container">
+
+    <!-- 1. Editor Utility Toolbar -->
+    <div class="editor-toolbar">
+        <div class="toolbar-left">
+            <a href="{{ url_for('dashboard') }}" class="editor-back-link" title="Return to your Writer's Desk">
+                &larr; Dashboard
+            </a>
+            <div class="toolbar-divider"></div>
+            <div class="editor-status-indicator" id="editorStatus">
+                <span class="status-dot status-ready" id="statusDot"></span>
+                <span class="status-label" id="statusText">New Draft</span>
+            </div>
+        </div>
+
+        <div class="toolbar-right">
+            <!-- Dynamic Word and Character Count -->
+            <div class="editor-live-stats" aria-live="polite">
+                <span class="stat-item"><strong id="wordCount">0</strong> words</span>
+                <span class="stat-separator">&middot;</span>
+                <span class="stat-item"><strong id="charCount">0</strong> characters</span>
+            </div>
+
+            <!-- Writing Actions -->
+            <div class="editor-actions">
+                <button type="button" id="saveDraftBtn" class="btn btn-secondary btn-sm" title="Save draft to local browser storage">
+                    Save Draft
+                </button>
+                <button type="button" id="publishBtn" class="btn btn-primary btn-sm" title="Demonstrate publishing action">
+                    Publish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Prototype Feedback Notice (Non-intrusive banner) -->
+    <div id="feedbackBanner" class="editor-feedback-banner" role="status" style="display: none;">
+        <div class="banner-inner">
+            <span class="banner-icon" id="bannerIcon">✦</span>
+            <span class="banner-text" id="bannerMessage"></span>
+        </div>
+        <button type="button" id="closeBannerBtn" class="banner-close" aria-label="Dismiss message">&times;</button>
+    </div>
+
+    <!-- 3. The Writing Canvas -->
+    <main class="writing-canvas">
+        <!-- Entry Meta Kicker -->
+        <div class="canvas-meta">
+            <span class="meta-tag">Draft in Progress</span>
+            <span class="meta-date" id="currentDateDisplay"></span>
+        </div>
+
+        <!-- Title Input -->
+        <div class="title-wrapper">
+            <label for="editorTitle" class="visually-hidden">Story Title</label>
+            <input 
+                type="text" 
+                id="editorTitle" 
+                class="editor-title-input" 
+                placeholder="Give your thoughts a title..." 
+                autocomplete="off"
+                spellcheck="true"
+            />
+        </div>
+
+        <!-- Body Writing Area -->
+        <div class="body-wrapper">
+            <label for="editorBody" class="visually-hidden">Story Content</label>
+            <textarea 
+                id="editorBody" 
+                class="editor-body-textarea" 
+                placeholder="Begin with a thought, a moment, or a sentence..."
+                spellcheck="true"
+            ></textarea>
+        </div>
+    </main>
+
+    <!-- 4. Quiet Editor Footer Information -->
+    <footer class="editor-canvas-footer">
+        <p class="storage-reminder">
+            ✦ <strong>Phase 1 Note:</strong> Content is saved to your browser's local storage only. 
+            Server-side saving and MySQL database persistence will be connected in Phase 2.
+        </p>
+        <span class="reading-time-indicator" id="readingTimeDisplay">Less than 1 min read</span>
+    </footer>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% endblock %}
+

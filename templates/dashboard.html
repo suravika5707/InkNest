@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Writer's Dashboard — InkNest{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+
+    <!-- 1. Welcome Header -->
+    <header class="dashboard-header">
+        <div class="dashboard-welcome">
+            <span class="section-kicker">Writer's Desk</span>
+            <h1 class="dashboard-title">A quiet space for your words.</h1>
+            <p class="dashboard-subtitle">
+                Welcome back to your desk. Review your recent notes, pick up an unfinished draft, 
+                or open a blank page.
+            </p>
+        </div>
+        <div class="dashboard-header-actions">
+            <a href="{{ url_for('editor') }}" class="btn btn-primary">
+                Write a New Entry
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. Writing Overview (Restrained & Understated) -->
+    <section class="dashboard-overview" aria-label="Writing Statistics">
+        <div class="overview-item">
+            <span class="overview-number">{{ stats.total }}</span>
+            <span class="overview-label">Total Entries</span>
+        </div>
+        <div class="overview-divider">/</div>
+        <div class="overview-item">
+            <span class="overview-number">{{ stats.published }}</span>
+            <span class="overview-label">Published Stories</span>
+        </div>
+        <div class="overview-divider">/</div>
+        <div class="overview-item">
+            <span class="overview-number">{{ stats.drafts }}</span>
+            <span class="overview-label">Private Drafts</span>
+        </div>
+        <div class="overview-badge">
+            <span class="badge-dot"></span>
+            Prototype Data
+        </div>
+    </section>
+
+    <!-- 3. Dashboard Layout: Main Feed & Quick Actions Sidebar -->
+    <div class="dashboard-layout">
+        
+        <!-- Main Column: Recently Written Entries -->
+        <section class="dashboard-main" aria-label="Recently Written Entries">
+            <div class="dashboard-section-header">
+                <div>
+                    <h2 class="section-heading">Recently Written</h2>
+                    <p class="section-subtext">Your latest essays, drafts, and reflections.</p>
+                </div>
+            </div>
+
+            <!-- Entries Stream -->
+            {% if entries and entries|length > 0 %}
+            <div class="entries-stream">
+                {% for entry in entries %}
+                <article class="entry-item {% if entry.status == 'Draft' %}entry-draft{% else %}entry-published{% endif %}">
+                    <div class="entry-meta">
+                        <span class="status-badge {% if entry.status == 'Draft' %}badge-draft{% else %}badge-published{% endif %}">
+                            {{ entry.type }}
+                        </span>
+                        <time class="entry-date">{{ entry.updated_at }}</time>
+                    </div>
+
+                    <h3 class="entry-title">{{ entry.title }}</h3>
+                    <p class="entry-excerpt">{{ entry.excerpt }}</p>
+
+                    <div class="entry-footer">
+                        {% if entry.status == 'Draft' %}
+                        <a href="{{ url_for('editor') }}" class="entry-link entry-link-draft">
+                            Continue Writing &rarr;
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('explore') }}" class="entry-link entry-link-published">
+                            Read Published Story &rarr;
+                        </a>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <!-- 5. Empty-State Component (Jinja2 Condition fallback) -->
+            <div class="empty-state">
+                <span class="empty-mark">✦</span>
+                <h3 class="empty-title">Your desk is quiet</h3>
+                <p class="empty-description">
+                    You have not written any entries yet. Once you begin drafting thoughts 
+                    or publishing essays, they will appear organized here.
+                </p>
+                <a href="{{ url_for('editor') }}" class="btn btn-primary">Write Your First Entry</a>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- Sidebar Column: Quick Actions & Editorial Notes -->
+        <aside class="dashboard-sidebar">
+            
+            <!-- Quick Actions Panel -->
+            <div class="sidebar-panel">
+                <h3 class="sidebar-title">Quick Actions</h3>
+                <ul class="quick-actions-list">
+                    <li>
+                        <a href="{{ url_for('editor') }}" class="quick-action-link">
+                            <span class="action-symbol">✦</span>
+                            <div class="action-text">
+                                <span class="action-label">Write a New Entry</span>
+                                <span class="action-hint">Open the distraction-free editor</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('explore') }}" class="quick-action-link">
+                            <span class="action-symbol">◈</span>
+                            <div class="action-text">
+                                <span class="action-label">Explore Stories</span>
+                                <span class="action-hint">Read public essays from other writers</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#drafts" class="quick-action-link">
+                            <span class="action-symbol">❖</span>
+                            <div class="action-text">
+                                <span class="action-label">View My Drafts</span>
+                                <span class="action-hint">{{ stats.drafts }} private notes in progress</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Quiet Writing Reminder -->
+            <div class="sidebar-panel reminder-panel">
+                <h3 class="sidebar-title">Writing Philosophy</h3>
+                <p class="reminder-text">
+                    Drafts are safe havens. In InkNest, a private journal entry is never visible 
+                    to readers until you explicitly publish it.
+                </p>
+                <div class="reminder-footer">
+                    <span class="reminder-tag">Private by Default</span>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+{% endblock %}
+
